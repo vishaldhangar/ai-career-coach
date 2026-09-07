@@ -5,6 +5,7 @@ import { Toaster } from "sonner";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,13 +32,19 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
+            <NextTopLoader
+              color="#a78bfa"
+              shadow="0 0 10px #a78bfa, 0 0 5px #7c3aed"
+              height={3}
+              showSpinner={false}
+            />
             <Header />
             <main className="min-h-screen">{children}</main>
             <Toaster richColors />
 
             <footer className="bg-muted/50 py-12">
               <div className="container mx-auto px-4 text-center text-gray-200">
-                <p>Made with 💗 by <span className="text-violet-400 font-semibold">Sakshi Tiwari</span></p>
+                <p>Made with 💗 by <span className="text-violet-400 font-semibold">Vishal Dhangar</span></p>
               </div>
             </footer>
           </ThemeProvider>

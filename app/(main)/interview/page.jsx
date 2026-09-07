@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { getAssessments } from "@/actions/interview";
+import { Button } from "@/components/ui/button";
 import StatsCards from "./_components/stats-cards";
 import PerformanceChart from "./_components/performace-chart";
 import QuizList from "./_components/quiz-list";
@@ -8,10 +10,18 @@ export default async function InterviewPrepPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-5">
+      <div className="flex items-center justify-between mb-5 flex-wrap gap-4">
         <h1 className="text-6xl font-bold gradient-title">
           Interview Preparation
         </h1>
+        <div className="flex gap-2 shrink-0">
+          <Link href="/interview/mock">
+            <Button variant="outline">Technical Quiz</Button>
+          </Link>
+          <Link href="/interview/behavioral">
+            <Button>Behavioral Interview</Button>
+          </Link>
+        </div>
       </div>
       <div className="space-y-6">
         <StatsCards assessments={assessments} />
