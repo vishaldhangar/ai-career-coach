@@ -111,7 +111,7 @@ export default function DashboardView({ insights: initial }) {
   return (
     <div className="space-y-6">
       {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between flex-wrap gap-3">
+      <div className="flex items-center justify-between flex-wrap gap-3 animate-fade-up">
         <div className="flex items-center gap-2 flex-wrap">
           <Badge variant="outline" className="text-xs">
             Updated {lastUpdated}
@@ -149,7 +149,7 @@ export default function DashboardView({ insights: initial }) {
       {/* ── Metric cards ───────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Market Outlook */}
-        <Card>
+        <Card className="card-glow animate-fade-up stagger-1">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Market Outlook</CardTitle>
             <div className={`rounded-md p-1.5 ${outlookInfo.bg}`}>
@@ -167,7 +167,7 @@ export default function DashboardView({ insights: initial }) {
         </Card>
 
         {/* Industry Growth */}
-        <Card>
+        <Card className="card-glow animate-fade-up stagger-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Industry Growth</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -185,7 +185,7 @@ export default function DashboardView({ insights: initial }) {
         </Card>
 
         {/* Demand Level */}
-        <Card>
+        <Card className="card-glow animate-fade-up stagger-3">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Talent Demand</CardTitle>
             <BriefcaseIcon className="h-4 w-4 text-muted-foreground" />
@@ -200,7 +200,7 @@ export default function DashboardView({ insights: initial }) {
         </Card>
 
         {/* Top Skills */}
-        <Card>
+        <Card className="card-glow animate-fade-up stagger-4">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Top Skills</CardTitle>
             <Brain className="h-4 w-4 text-muted-foreground" />
@@ -227,7 +227,7 @@ export default function DashboardView({ insights: initial }) {
       </div>
 
       {/* ── Salary chart ───────────────────────────────────────────────── */}
-      <Card>
+      <Card className="animate-fade-up stagger-5">
         <CardHeader>
           <CardTitle>Salary Ranges by Role</CardTitle>
           <CardDescription>
