@@ -375,9 +375,17 @@ async function extractResumeText(file) {
   const buffer = Buffer.from(await file.arrayBuffer());
 
   if (fileName.endsWith(".pdf") || file.type === "application/pdf") {
-    const pdfParse = (await import("pdf-parse")).default;
-    const data = await pdfParse(buffer);
-    return data.text;
+    const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
+    pdfjsLib.GlobalWorkerOptions.workerSrc = "";
+    const uint8Array = new Uint8Array(buffer);
+    const doc = await pdfjsLib.getDocument({ data: uint8Array }).promise;
+    const pageTexts = [];
+    for (let i = 1; i <= doc.numPages; i++) {
+      const page = await doc.getPage(i);
+      const content = await page.getTextContent();
+      pageTexts.push(content.items.map((item) => item.str).join(" "));
+    }
+    return pageTexts.join("\n");
   }
 
   if (fileName.endsWith(".docx") || file.type.includes("wordprocessingml")) {
