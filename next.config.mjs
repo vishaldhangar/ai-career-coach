@@ -3,7 +3,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  serverExternalPackages: ["pdf-parse"],
+  serverExternalPackages: ["unpdf", "pdf-parse"],
   experimental: {
     serverActions: {
       bodySizeLimit: "5mb",
