@@ -375,17 +375,9 @@ async function extractResumeText(file) {
   const buffer = Buffer.from(await file.arrayBuffer());
 
   if (fileName.endsWith(".pdf") || file.type === "application/pdf") {
-    const pdfjsLib = await import("pdfjs-dist/legacy/build/pdf.mjs");
-    pdfjsLib.GlobalWorkerOptions.workerSrc = "";
-    const uint8Array = new Uint8Array(buffer);
-    const doc = await pdfjsLib.getDocument({ data: uint8Array }).promise;
-    const pageTexts = [];
-    for (let i = 1; i <= doc.numPages; i++) {
-      const page = await doc.getPage(i);
-      const content = await page.getTextContent();
-      pageTexts.push(content.items.map((item) => item.str).join(" "));
-    }
-    return pageTexts.join("\n");
+    const pdfParse = (await import("pdf-parse/node")).default;
+    const data = await pdfParse(buffer);
+    return data.text;
   }
 
   if (fileName.endsWith(".docx") || file.type.includes("wordprocessingml")) {
@@ -429,9 +421,12 @@ export async function scanResume({ resumeContent, jobDescription }) {
   });
 }
 
-export async function scanUploadedResume({ file, jobDescription }) {
+export async function scanUploadedResume(formData) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
+
+  const file = formData.get("file");
+  const jobDescription = formData.get("jobDescription");
 
   if (!file || typeof file.arrayBuffer !== "function") {
     throw new Error("Select a resume file to upload");

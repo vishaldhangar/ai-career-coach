@@ -63,9 +63,15 @@ export default function AtsScanner({ resumeContent }) {
 
     setIsScanning(true);
     try {
-      const result = selectedFile
-        ? await scanUploadedResume({ file: selectedFile, jobDescription })
-        : await scanResume({ resumeContent, jobDescription });
+      let result;
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("jobDescription", jobDescription);
+        result = await scanUploadedResume(formData);
+      } else {
+        result = await scanResume({ resumeContent, jobDescription });
+      }
       setScan(result);
       getAtsScans()
         .then(setScanHistory)
