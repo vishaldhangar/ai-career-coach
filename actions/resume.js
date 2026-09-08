@@ -377,7 +377,7 @@ async function extractResumeText(file) {
   if (fileName.endsWith(".pdf") || file.type === "application/pdf") {
     const { extractText } = await import("unpdf");
     const { text } = await extractText(new Uint8Array(buffer));
-    return text;
+    return Array.isArray(text) ? text.join("\n") : text;
   }
 
   if (fileName.endsWith(".docx") || file.type.includes("wordprocessingml")) {
