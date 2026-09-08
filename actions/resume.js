@@ -375,9 +375,11 @@ async function extractResumeText(file) {
   const buffer = Buffer.from(await file.arrayBuffer());
 
   if (fileName.endsWith(".pdf") || file.type === "application/pdf") {
-    const pdfParse = (await import("pdf-parse/node")).default;
-    const data = await pdfParse(buffer);
-    return data.text;
+    const { PDFParse } = await import("pdf-parse");
+    const parser = new PDFParse({ data: buffer });
+    const result = await parser.getText();
+    await parser.destroy();
+    return result.text;
   }
 
   if (fileName.endsWith(".docx") || file.type.includes("wordprocessingml")) {
